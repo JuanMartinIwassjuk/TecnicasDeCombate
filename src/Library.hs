@@ -1,42 +1,27 @@
 module Library where
 import PdePreludat
 
-doble :: Number -> Number
-doble numero = numero + numero
-type  Horas  =  Number
-type  Objetivo  =  String
-type  Presion  =  Number
-type  Golpe  =  Objetivo  ->  Number
+type Sabor = String
+type Cantidad = Number
+type Pedido =  (Sabor,Cantidad)
+type CantPorciones = Number
+type CantPedidos = Pedido -> Pedido ->Pedido -> Pedido ->Pedido -> Pedido
 
 
-presionGolpe  ::  Horas  ->  Objetivo  ->  Presion
-presionGolpe horas objetivo = poder horas / fortaleza objetivo
-
-poder  ::  Horas  ->  Number
-poder = ( *  15 )
-
-fortaleza  ::  Objetivo  ->  Number
-fortaleza = (2*) .  length
+esMuzza :: Pedido -> Number
+esMuzza (sabor,cantidad) 
+ | sabor == "muzza" = cantidad
+ | otherwise = 0
 
 
+unaPizza :: CantPorciones -> Number
+unaPizza cantporciones = cantporciones/8
 
-gomuGomu  ::  Golpe
-gomuGomu = presionGolpe 180
+cantidadDePorciones :: Pedido -> Pedido ->Pedido -> Pedido ->Pedido -> Pedido -> Number
+cantidadDePorciones pedido1 pedido2 pedido3 pedido4 pedido5 pedido6 =esMuzza(pedido1)+esMuzza(pedido2)+esMuzza(pedido3)+esMuzza(pedido4)+esMuzza(pedido5)+esMuzza(pedido6)
 
-normalesConsecutivos  ::  Golpe
-normalesConsecutivos = presionGolpe 240
+pizzasNecesarias :: CantPorciones -> Number
+pizzasNecesarias = ceiling
 
-objetivoEsDificil :: Objetivo  -> Bool
-objetivoEsDificil = (< 100) . gomuGomu
-
-objetivoFocalizado :: Objetivo -> String
-objetivoFocalizado = take 7
-
-between :: Ord (a) => a -> a -> a -> Bool
-between a c b = a <= b && b<=c
-
-
-
-
-objetivoEsAccecible :: Objetivo -> Bool
-objetivoEsAccecible = between 200 400.normalesConsecutivos.objetivoFocalizado
+cuantasMuzzas :: Pedido -> Pedido ->Pedido -> Pedido ->Pedido -> Pedido -> Number
+cuantasMuzzas= cantidadDePorciones
